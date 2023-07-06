@@ -1,5 +1,7 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'pokemon_form_model.dart';
 
+@JsonSerializable()
 class Pokemon {
   int id;
   String name;
