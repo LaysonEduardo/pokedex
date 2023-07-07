@@ -7,6 +7,7 @@ Based on the task description, these were the decisions made regarding the packa
 * **UI:**
     * Rive: for easy control of animations.
     * show_up_animation: for easy control of animations in widgets.
+    * palette_generator: to get palette from pokemons
 * **Internationalization:**
     * intl: to manipulate dates/times.
     * intl_utils: to generate files related to translations.

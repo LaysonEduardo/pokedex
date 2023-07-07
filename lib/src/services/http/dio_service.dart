@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pokedex_colaboraapp/src/services/http/base/http_base.dart';
-import '../../models/commom/app_exceptions.dart';
+import '../../models/app/app_exceptions.dart';
 import '../../repository/endpoints.dart';
 
 final class DioServices implements HTTPServices {

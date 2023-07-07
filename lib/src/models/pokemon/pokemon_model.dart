@@ -1,40 +1,39 @@
+import 'package:flutter/widgets.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'pokemon_form_model.dart';
+import 'package:palette_generator/palette_generator.dart';
+// import 'pokemon_form_model.dart';
 
 @JsonSerializable()
 class Pokemon {
   int id;
   String name;
-  String frontDefaultSpriteUrl;
-  List<String> types;
+  String sprite_url;
+  String artwork_url;
+  // List<String> types;
   int height;
   int weight;
-  List<PokemonForm> forms;
-
+  PaletteColor? dominant_color;
+  Image? image_provider;
   Pokemon({
     required this.id,
     required this.name,
-    required this.frontDefaultSpriteUrl,
-    required this.types,
+    required this.sprite_url,
+    required this.artwork_url,
+    // required this.types,
     required this.height,
     required this.weight,
-    required this.forms,
   });
 
   factory Pokemon.fromJson(Map<String, dynamic> json) {
     return Pokemon(
       id: json['id'],
       name: json['name'],
-      frontDefaultSpriteUrl: json['sprites']['front_default'],
-      types: json['types'].map((type) => type['name']).toList(),
+      sprite_url: json['sprites']['front_default'],
+      artwork_url: json['sprites']['other']['official-artwork']
+          ['front_default'],
+      // types: List<String>.from(json['types']),
       height: json['height'],
       weight: json['weight'],
-      forms: json['forms'].map((form) => PokemonForm.fromJson(form)).toList(),
     );
-  }
-
-  @override
-  String toString() {
-    return 'Pokemon(id: $id, name: $name, frontDefaultSpriteUrl: $frontDefaultSpriteUrl, types: $types, height: $height, weight: $weight, forms: $forms)';
   }
 }
