@@ -29,6 +29,11 @@ abstract class WelcomeStoreBase with Store {
   @action
   Future<void> init() async {
     is_loading = true;
+    await localStorage.init();
+    final has_accessed = await checkFirstAccess() ?? false;
+    if (!has_accessed) {
+      Modular.to.navigate('/home/');
+    }
     await Future.wait([
       addPokemon(),
       addPokemon(),
@@ -58,5 +63,9 @@ abstract class WelcomeStoreBase with Store {
 
   Color accentColor() {
     return welcome_pokemons[current_page].dominant_color?.color ?? Colors.grey;
+  }
+
+  Future<bool?> checkFirstAccess() async {
+    return await localStorage.getBool('already_started');
   }
 }

@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'base/local_storage_base.dart';
 
-final class SharedPreferencesStorageService extends LocalStorageService {
+final class SharedPreferencesStorageService implements LocalStorageService {
   late SharedPreferences _storage;
 
   @override
@@ -16,24 +16,22 @@ final class SharedPreferencesStorageService extends LocalStorageService {
   }
 
   @override
-  Future<bool> save(String key, dynamic value) async {
+  Future<bool> saveBool(String key, value) async {
+    return await _storage.setBool(key, value);
+  }
+
+  @override
+  Future<bool> saveString(String key, value) async {
     return await _storage.setString(key, value);
   }
 
   @override
-  Future<dynamic> get(String key) async {
+  Future<bool?> getBool(String key) async {
+    return _storage.getBool(key);
+  }
+
+  @override
+  Future<String?> getString(String key) async {
     return _storage.getString(key);
-  }
-
-  @override
-  Future<bool> saveBool(String key, value) {
-    // TODO: implement saveBool
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> saveString(String key, value) {
-    // TODO: implement saveString
-    throw UnimplementedError();
   }
 }

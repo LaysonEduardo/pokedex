@@ -12,7 +12,7 @@ class _PokedexAppState extends State<PokedexApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'MyWeather',
+      title: 'PokedexApp',
       theme: ThemeData(primarySwatch: Colors.blue),
       routeInformationParser: Modular.routeInformationParser,
       routerDelegate: Modular.routerDelegate,

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:pokedex_colaboraapp/app/welcome/welcome_store.dart';
 import 'package:pokedex_colaboraapp/src/utils/app_fonts.dart';
 import 'package:pokedex_colaboraapp/src/widgets/utils/space.dart';
 import 'package:show_up_animation/show_up_animation.dart';
-
-import '../../src/widgets/utils/keep_alive_wiget.dart';
+import '../../../src/widgets/utils/keep_alive_wiget.dart';
+import 'welcome_store.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -17,11 +16,13 @@ class WelcomePage extends StatefulWidget {
 
 class _WelcomePageState extends State<WelcomePage>
     with SingleTickerProviderStateMixin {
-  final WelcomeStore controller = Modular.get<WelcomeStore>();
+  final controller = Modular.get<WelcomeStore>();
   late PageController pageController;
+
   @override
   void initState() {
     controller.init();
+
     pageController = PageController(initialPage: 0);
     super.initState();
   }
