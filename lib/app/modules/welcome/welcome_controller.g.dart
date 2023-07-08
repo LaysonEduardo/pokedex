@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'welcome_store.dart';
+part of 'welcome_controller.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,9 +8,9 @@ part of 'welcome_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$WelcomeStore on WelcomeStoreBase, Store {
+mixin _$WelcomeController on WelcomeControllerBase, Store {
   late final _$current_pageAtom =
-      Atom(name: 'WelcomeStoreBase.current_page', context: context);
+      Atom(name: 'WelcomeControllerBase.current_page', context: context);
 
   @override
   int get current_page {
@@ -26,7 +26,7 @@ mixin _$WelcomeStore on WelcomeStoreBase, Store {
   }
 
   late final _$is_loadingAtom =
-      Atom(name: 'WelcomeStoreBase.is_loading', context: context);
+      Atom(name: 'WelcomeControllerBase.is_loading', context: context);
 
   @override
   bool get is_loading {
@@ -42,7 +42,7 @@ mixin _$WelcomeStore on WelcomeStoreBase, Store {
   }
 
   late final _$initAsyncAction =
-      AsyncAction('WelcomeStoreBase.init', context: context);
+      AsyncAction('WelcomeControllerBase.init', context: context);
 
   @override
   Future<void> init() {
@@ -50,19 +50,19 @@ mixin _$WelcomeStore on WelcomeStoreBase, Store {
   }
 
   late final _$changePageAsyncAction =
-      AsyncAction('WelcomeStoreBase.changePage', context: context);
+      AsyncAction('WelcomeControllerBase.changePage', context: context);
 
   @override
   Future<void> changePage(int index) {
     return _$changePageAsyncAction.run(() => super.changePage(index));
   }
 
-  late final _$acceptAsyncAction =
-      AsyncAction('WelcomeStoreBase.accept', context: context);
+  late final _$startAsyncAction =
+      AsyncAction('WelcomeControllerBase.start', context: context);
 
   @override
-  Future<void> accept() {
-    return _$acceptAsyncAction.run(() => super.accept());
+  Future<void> start() {
+    return _$startAsyncAction.run(() => super.start());
   }
 
   @override

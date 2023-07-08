@@ -5,7 +5,7 @@ import 'package:pokedex_colaboraapp/src/utils/app_fonts.dart';
 import 'package:pokedex_colaboraapp/src/widgets/utils/space.dart';
 import 'package:show_up_animation/show_up_animation.dart';
 import '../../../src/widgets/utils/keep_alive_wiget.dart';
-import 'welcome_store.dart';
+import 'welcome_controller.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -16,7 +16,7 @@ class WelcomePage extends StatefulWidget {
 
 class _WelcomePageState extends State<WelcomePage>
     with SingleTickerProviderStateMixin {
-  final controller = Modular.get<WelcomeStore>();
+  final controller = Modular.get<WelcomeController>();
   late PageController pageController;
 
   @override
@@ -123,7 +123,7 @@ class _WelcomePageState extends State<WelcomePage>
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Text(
-                                        'Bem-vindo a Pokédex!Este aplicativo será seu guia pelo mundo dos Pokémon. Vamos mergulhar e explorar juntos!',
+                                        'Bem-vindo a Pokédex! Este aplicativo será seu guia pelo mundo dos Pokémon. Vamos mergulhar e explorar juntos!',
                                         style: AppFonts.medium(
                                           20,
                                           color: Colors.black.withOpacity(0.7),
@@ -158,7 +158,7 @@ class _WelcomePageState extends State<WelcomePage>
                           ),
                         ),
                         Text(
-                          'this its just a technical test, not commercial',
+                          'this its just a technical test, not commercial proposal',
                           style: AppFonts.regular(
                             15,
                             color: Colors.black.withOpacity(0.7),
@@ -181,9 +181,7 @@ class _WelcomePageState extends State<WelcomePage>
       child: ShowUpAnimation(
         offset: (index == 0 || index == 1) ? -0.2 : 0.2,
         direction: index != 1 ? Direction.horizontal : Direction.vertical,
-        child: Image(
-          image: controller.welcome_pokemons[index].image_provider!.image,
-        ),
+        child: Image.network(controller.welcome_pokemons[index].artwork_url),
       ),
     );
   }

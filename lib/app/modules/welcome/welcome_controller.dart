@@ -8,18 +8,16 @@ import 'package:pokedex_colaboraapp/src/repository/pokedex_repository.dart';
 import 'package:pokedex_colaboraapp/src/services/storage/base/local_storage_base.dart';
 import 'package:pokedex_colaboraapp/src/utils/app_colors.dart';
 
-part 'welcome_store.g.dart';
+part 'welcome_controller.g.dart';
 
-class WelcomeStore = WelcomeStoreBase with _$WelcomeStore;
+class WelcomeController = WelcomeControllerBase with _$WelcomeController;
 
-abstract class WelcomeStoreBase with Store {
+abstract class WelcomeControllerBase with Store {
   PokedexRepository pokedex = Modular.get<PokedexRepository>();
   LocalStorageService localStorage = Modular.get<LocalStorageService>();
 
   ObservableList<Pokemon> welcome_pokemons = ObservableList<Pokemon>.of([]);
-
-  AppColors appColors = AppColors();
-
+  ObservableList<Color> welcome_colors = ObservableList<Color>.of([]);
   @observable
   int current_page = 0;
 
@@ -31,7 +29,7 @@ abstract class WelcomeStoreBase with Store {
     is_loading = true;
     await localStorage.init();
     final has_accessed = await checkFirstAccess() ?? false;
-    if (!has_accessed) {
+    if (has_accessed) {
       Modular.to.navigate('/home/');
     }
     await Future.wait([
@@ -45,11 +43,9 @@ abstract class WelcomeStoreBase with Store {
   Future<void> addPokemon() async {
     final random_id = Random().nextInt(1010 - 1);
     final pokemon = await pokedex.getPokemon(random_id);
-    pokemon.image_provider = Image.network(pokemon.artwork_url);
-    if (pokemon.image_provider != null) {
-      pokemon.dominant_color =
-          await appColors.pokemonColor(pokemon.image_provider!.image);
-    }
+    pokemon.mainColor =
+        await AppColors.pokemonColor(Image.network(pokemon.artwork_url).image);
+
     welcome_pokemons.add(pokemon);
   }
 
@@ -59,10 +55,10 @@ abstract class WelcomeStoreBase with Store {
   }
 
   @action
-  Future<void> accept() async {}
+  Future<void> start() async {}
 
   Color accentColor() {
-    return welcome_pokemons[current_page].dominant_color?.color ?? Colors.grey;
+    return welcome_pokemons[current_page].mainColor;
   }
 
   Future<bool?> checkFirstAccess() async {
