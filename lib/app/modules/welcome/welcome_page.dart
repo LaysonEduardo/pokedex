@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:pokedex_colaboraapp/app/commom/widgets/poke_background.dart';
 import 'package:pokedex_colaboraapp/src/utils/app_fonts.dart';
-import 'package:pokedex_colaboraapp/src/widgets/utils/space.dart';
 import 'package:show_up_animation/show_up_animation.dart';
-import '../../../src/widgets/utils/keep_alive_wiget.dart';
+import '../../commom/widgets/keep_alive_wiget.dart';
+import '../../commom/widgets/space.dart';
 import 'welcome_controller.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -31,29 +32,12 @@ class _WelcomePageState extends State<WelcomePage>
   Widget build(BuildContext context) {
     return Observer(builder: (context) {
       return Scaffold(
-        body: AnimatedContainer(
-          height: MediaQuery.sizeOf(context).height,
-          width: MediaQuery.sizeOf(context).width,
-          duration: const Duration(milliseconds: 400),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: controller.is_loading
-                  ? [Colors.grey, Colors.white]
-                  : [controller.accentColor(), Colors.grey[400]!],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-          child: Stack(
-            children: [
-              Image.asset(
-                'assets/logo/pokeball_white.png',
-                opacity: const AlwaysStoppedAnimation(.15),
-              ),
-              if (controller.is_loading) ...[
-                const Center(child: CircularProgressIndicator())
-              ] else ...[
-                SafeArea(
+        body: PokeBackground(
+          accent:
+              controller.is_loading ? Colors.white : controller.accentColor(),
+          child: controller.is_loading
+              ? const Center(child: CircularProgressIndicator())
+              : SafeArea(
                   child: ShowUpAnimation(
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
@@ -109,8 +93,7 @@ class _WelcomePageState extends State<WelcomePage>
                               ),
                               Align(
                                 alignment: Alignment.bottomCenter,
-                                child: AnimatedContainer(
-                                  duration: const Duration(milliseconds: 400),
+                                child: Container(
                                   margin: const EdgeInsets.symmetric(
                                     horizontal: 20,
                                   ),
@@ -123,7 +106,8 @@ class _WelcomePageState extends State<WelcomePage>
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Text(
-                                        'Bem-vindo a Pokédex! Este aplicativo será seu guia pelo mundo dos Pokémon. Vamos mergulhar e explorar juntos!',
+                                        controller
+                                            .messages[controller.current_page],
                                         style: AppFonts.medium(
                                           20,
                                           color: Colors.black.withOpacity(0.7),
@@ -144,10 +128,14 @@ class _WelcomePageState extends State<WelcomePage>
                           minWidth: 250,
                           elevation: 0,
                           onPressed: () {
-                            pageController.nextPage(
-                              duration: const Duration(milliseconds: 400),
-                              curve: Curves.easeIn,
-                            );
+                            if (controller.current_page != 2) {
+                              pageController.nextPage(
+                                duration: const Duration(milliseconds: 400),
+                                curve: Curves.easeIn,
+                              );
+                            } else {
+                              controller.start();
+                            }
                           },
                           child: Text(
                             controller.current_page == 2 ? 'Start' : 'Next',
@@ -168,21 +156,16 @@ class _WelcomePageState extends State<WelcomePage>
                     ),
                   ),
                 ),
-              ],
-            ],
-          ),
         ),
       );
     });
   }
 
   Widget carouselObject(int index) {
-    return KeepAliveWidget(
-      child: ShowUpAnimation(
-        offset: (index == 0 || index == 1) ? -0.2 : 0.2,
-        direction: index != 1 ? Direction.horizontal : Direction.vertical,
-        child: Image.network(controller.welcome_pokemons[index].artwork_url),
-      ),
+    return ShowUpAnimation(
+      offset: (index == 0 || index == 1) ? -0.2 : 0.2,
+      direction: index != 1 ? Direction.horizontal : Direction.vertical,
+      child: Image.network(controller.welcome_pokemons[index].artwork_url),
     );
   }
 }

@@ -17,7 +17,12 @@ abstract class WelcomeControllerBase with Store {
   LocalStorageService localStorage = Modular.get<LocalStorageService>();
 
   ObservableList<Pokemon> welcome_pokemons = ObservableList<Pokemon>.of([]);
-  ObservableList<Color> welcome_colors = ObservableList<Color>.of([]);
+  List<String> messages = [
+    'Welcome to the world of Pokémon! Start your journey and uncover the mysteries of these incredible creatures',
+    "Get ready to explore a vast universe discovering random Pokémons. Ctach 'em all and become a Pokémon Master!",
+    'Discover the strengths, weaknesses, evolution paths, abilities, and much more.'
+  ];
+
   @observable
   int current_page = 0;
 
@@ -55,7 +60,11 @@ abstract class WelcomeControllerBase with Store {
   }
 
   @action
-  Future<void> start() async {}
+  Future start() async {
+    //TODO check this before finish
+    // await localStorage.saveBool('already_started', true);
+    Modular.to.navigate('/home/');
+  }
 
   Color accentColor() {
     return welcome_pokemons[current_page].mainColor;

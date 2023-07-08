@@ -13,6 +13,10 @@ class WelcomeModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/', child: (context, args) => const WelcomePage()),
-        ModuleRoute('/home', module: HomeModule()),
+        ModuleRoute(
+          '/home',
+          module: HomeModule(),
+          transition: TransitionType.fadeIn,
+        ),
       ];
 }
