@@ -1,7 +1,67 @@
 import 'package:flutter/material.dart';
 
-class AppColors {
-  static const Color lightBlue = Color(0xff2775ca);
-  static const Color mediumBlue = Color(0xff1d5796);
-  static const Color darkBlue = Color(0xff133963);
+class AppFonts extends TextStyle {
+  const AppFonts.black(
+    double size, {
+    Color? color,
+    double? height,
+    TextDecoration? decoration,
+    List<Shadow>? shadows,
+  }) : super(
+          fontSize: size,
+          color: color ?? Colors.black,
+          fontFamily: 'Roboto',
+          height: height,
+          decoration: decoration,
+          shadows: shadows,
+          fontWeight: FontWeight.w900,
+        );
+
+  const AppFonts.medium(
+    double size, {
+    Color? color,
+    double? height,
+    TextDecoration? decoration,
+    List<Shadow>? shadows,
+  }) : super(
+          fontSize: size,
+          color: color ?? Colors.black,
+          fontFamily: 'Roboto',
+          height: height,
+          decoration: decoration,
+          shadows: shadows,
+          fontWeight: FontWeight.w700,
+        );
+
+  const AppFonts.bold(
+    double size, {
+    Color? color,
+    double? height,
+    TextDecoration? decoration,
+    List<Shadow>? shadows,
+  }) : super(
+          fontSize: size,
+          color: color ?? Colors.black,
+          fontFamily: 'Roboto',
+          height: height,
+          decoration: decoration,
+          shadows: shadows,
+          fontWeight: FontWeight.w900,
+        );
+
+  const AppFonts.regular(
+    double size, {
+    Color? color,
+    double? height,
+    TextDecoration? decoration,
+    List<Shadow>? shadows,
+  }) : super(
+          fontSize: size,
+          color: color ?? Colors.black,
+          fontFamily: 'Roboto',
+          height: height,
+          decoration: decoration,
+          shadows: shadows,
+          fontWeight: FontWeight.w500,
+        );
 }

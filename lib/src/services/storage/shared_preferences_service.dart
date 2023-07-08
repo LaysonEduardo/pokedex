@@ -24,4 +24,16 @@ final class SharedPreferencesStorageService extends LocalStorageService {
   Future<dynamic> get(String key) async {
     return _storage.getString(key);
   }
+
+  @override
+  Future<bool> saveBool(String key, value) {
+    // TODO: implement saveBool
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> saveString(String key, value) {
+    // TODO: implement saveString
+    throw UnimplementedError();
+  }
 }

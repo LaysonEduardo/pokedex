@@ -5,6 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pokedex_colaboraapp/src/models/pokemon/pokemon_model.dart';
 import 'package:pokedex_colaboraapp/src/repository/pokedex_repository.dart';
+import 'package:pokedex_colaboraapp/src/services/storage/base/local_storage_base.dart';
 import 'package:pokedex_colaboraapp/src/utils/app_colors.dart';
 
 part 'welcome_store.g.dart';
@@ -13,6 +14,7 @@ class WelcomeStore = WelcomeStoreBase with _$WelcomeStore;
 
 abstract class WelcomeStoreBase with Store {
   PokedexRepository pokedex = Modular.get<PokedexRepository>();
+  LocalStorageService localStorage = Modular.get<LocalStorageService>();
 
   ObservableList<Pokemon> welcome_pokemons = ObservableList<Pokemon>.of([]);
 
@@ -37,7 +39,6 @@ abstract class WelcomeStoreBase with Store {
 
   Future<void> addPokemon() async {
     final random_id = Random().nextInt(1010 - 1);
-    print(random_id);
     final pokemon = await pokedex.getPokemon(random_id);
     pokemon.image_provider = Image.network(pokemon.artwork_url);
     if (pokemon.image_provider != null) {
@@ -56,6 +57,6 @@ abstract class WelcomeStoreBase with Store {
   Future<void> accept() async {}
 
   Color accentColor() {
-    return welcome_pokemons[current_page].dominant_color?.color ?? Colors.white;
+    return welcome_pokemons[current_page].dominant_color?.color ?? Colors.grey;
   }
 }
