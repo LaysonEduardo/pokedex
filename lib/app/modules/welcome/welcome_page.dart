@@ -4,7 +4,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:pokedex_colaboraapp/app/commom/widgets/poke_background.dart';
 import 'package:pokedex_colaboraapp/src/utils/app_fonts.dart';
 import 'package:show_up_animation/show_up_animation.dart';
-import '../../commom/widgets/keep_alive_wiget.dart';
 import '../../commom/widgets/space.dart';
 import 'welcome_controller.dart';
 
@@ -48,15 +47,17 @@ class _WelcomePageState extends State<WelcomePage>
                           children: [
                             Text(
                               'Welcome to',
-                              style: AppFonts.medium(20,
-                                  color: Colors.white,
-                                  shadows: [
-                                    Shadow(
-                                      color: Colors.black.withOpacity(.5),
-                                      blurRadius: 2,
-                                      offset: const Offset(0, 2),
-                                    )
-                                  ]),
+                              style: AppFonts.medium(
+                                20,
+                                color: Colors.white,
+                                shadows: [
+                                  Shadow(
+                                    color: Colors.black.withOpacity(.5),
+                                    blurRadius: 2,
+                                    offset: const Offset(0, 2),
+                                  )
+                                ],
+                              ),
                             ),
                             const VSpace(15),
                             Image.asset('assets/logo/pokedex.png'),

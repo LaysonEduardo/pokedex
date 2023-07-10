@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PokeSearchBar extends StatelessWidget implements PreferredSizeWidget {
-  const PokeSearchBar({super.key});
-
+  const PokeSearchBar({super.key, required this.onChanged});
+  final Function(String) onChanged;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -19,9 +19,10 @@ class PokeSearchBar extends StatelessWidget implements PreferredSizeWidget {
               Icons.search,
               color: Colors.grey[800],
             ),
-            const Flexible(
+            Flexible(
               child: TextField(
-                decoration: InputDecoration.collapsed(hintText: 'Search'),
+                decoration: const InputDecoration.collapsed(hintText: 'Search'),
+                onChanged: onChanged,
               ),
             ),
           ],

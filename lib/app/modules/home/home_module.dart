@@ -1,10 +1,11 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:pokedex_colaboraapp/app/modules/home/home_controller.dart';
 import 'package:pokedex_colaboraapp/app/modules/home/home_page.dart';
 
 class HomeModule extends Module {
   @override
   List<Bind> get binds => [
-        // Bind.lazySingleton((_) => WelcomeStore()),
+        Bind.lazySingleton((_) => HomeController()),
       ];
 
   @override

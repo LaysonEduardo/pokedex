@@ -48,8 +48,8 @@ abstract class WelcomeControllerBase with Store {
   Future<void> addPokemon() async {
     final random_id = Random().nextInt(1010 - 1);
     final pokemon = await pokedex.getPokemon(random_id);
-    pokemon.mainColor =
-        await AppColors.pokemonColor(Image.network(pokemon.artwork_url).image);
+    pokemon.mainColor = await AppColors.pokemonBaseColor(
+        Image.network(pokemon.artwork_url).image);
 
     welcome_pokemons.add(pokemon);
   }

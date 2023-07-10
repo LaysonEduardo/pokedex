@@ -9,4 +9,8 @@ final class Endpoints {
   static String pokemonByName(String name) {
     return "$baseURL/pokemon/$name";
   }
+
+  static String pokemonsList({int limit = 0, int offset = 0}) {
+    return "$baseURL/pokemon?limit=$limit&offset=$offset";
+  }
 }
