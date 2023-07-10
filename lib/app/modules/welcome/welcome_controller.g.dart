@@ -61,7 +61,7 @@ mixin _$WelcomeController on WelcomeControllerBase, Store {
       AsyncAction('WelcomeControllerBase.start', context: context);
 
   @override
-  Future<void> start() {
+  Future<dynamic> start() {
     return _$startAsyncAction.run(() => super.start());
   }
 

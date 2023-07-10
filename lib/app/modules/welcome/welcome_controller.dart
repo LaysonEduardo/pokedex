@@ -61,8 +61,7 @@ abstract class WelcomeControllerBase with Store {
 
   @action
   Future start() async {
-    //TODO check this before finish
-    // await localStorage.saveBool('already_started', true);
+    await localStorage.saveBool('already_started', true);
     Modular.to.navigate('/home/');
   }
 
