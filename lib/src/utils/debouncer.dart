@@ -1,11 +1,9 @@
 import 'dart:async';
 
-///Simple debounce operation implement
 class Debouncer {
   Debouncer._();
   static Timer? _timer;
 
-  ///Run method with automatic Debounce
   static void run(
     void Function() action, {
     Duration duration = const Duration(milliseconds: 400),
