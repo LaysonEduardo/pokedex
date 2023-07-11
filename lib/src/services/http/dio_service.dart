@@ -5,12 +5,12 @@ import '../../models/app/app_exceptions.dart';
 import '../../repository/endpoints.dart';
 
 final class DioServices implements HTTPServices {
-  final Dio _dio;
-  DioServices(this._dio);
+  final Dio dio;
+  DioServices(this.dio);
 
   @override
   Future init() async {
-    _dio.options = BaseOptions(baseUrl: Endpoints.baseURL);
+    dio.options = BaseOptions(baseUrl: Endpoints.baseURL);
     if (kDebugMode) {
       print("DioServices started!");
     }
@@ -18,7 +18,7 @@ final class DioServices implements HTTPServices {
 
   @override
   Future<Response<dynamic>> get(String url) async {
-    final Response response = await _dio.get(url).then((value) {
+    final Response response = await dio.get(url).then((value) {
       return value;
     });
     if (response.statusCode == 200) {
@@ -29,7 +29,7 @@ final class DioServices implements HTTPServices {
 
   @override
   Future<Response> post(String url) async {
-    final Response response = await _dio.post(
+    final Response response = await dio.post(
       url,
     );
     if (response.statusCode == 200) {
