@@ -48,6 +48,7 @@ flutter:
     - assets/background_objects/pokemons/
     - assets/logo/
     - assets/icons/
+    - assets/loading/
 
   fonts:
     - family: Roboto

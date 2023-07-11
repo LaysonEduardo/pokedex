@@ -5,6 +5,7 @@
 Based on the task description, these were the decisions made regarding the packages:
 
 * **UI:**
+    * flutter_svg: to show pokemon types.
     * shimmer_animation: for easy create widget loaders.
     * show_up_animation: for easy control of animations in widgets.
     * palette_generator: to get palette from pokemons.

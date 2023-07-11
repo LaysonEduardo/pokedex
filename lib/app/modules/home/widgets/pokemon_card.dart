@@ -106,9 +106,11 @@ class _PokemonCardState extends State<PokemonCard> {
                             },
                           ),
                         ),
-                        Image.network(
-                          pokemon.artwork_url,
-                          height: 90,
+                        Flexible(
+                          child: Image.network(
+                            pokemon.artwork_url,
+                            height: 90,
+                          ),
                         ),
                       ],
                     ),

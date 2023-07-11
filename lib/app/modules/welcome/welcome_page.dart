@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:pokedex_colaboraapp/app/commom/dialogs/error_dialog.dart';
 import 'package:pokedex_colaboraapp/app/commom/widgets/poke_background.dart';
 import 'package:pokedex_colaboraapp/src/utils/app_fonts.dart';
 import 'package:show_up_animation/show_up_animation.dart';
+import '../../../src/models/app/app_exceptions.dart';
+import '../../commom/widgets/poke_loading.dart';
 import '../../commom/widgets/space.dart';
 import 'welcome_controller.dart';
 
@@ -21,8 +24,18 @@ class _WelcomePageState extends State<WelcomePage>
 
   @override
   void initState() {
-    controller.init();
-
+    controller.init().catchError((error) {
+      if (error is HTTPException) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const ErrorDialog(
+              errorMessage: 'Check your internet access and try again.',
+            );
+          },
+        );
+      }
+    });
     pageController = PageController(initialPage: 0);
     super.initState();
   }
@@ -35,7 +48,9 @@ class _WelcomePageState extends State<WelcomePage>
           accent:
               controller.is_loading ? Colors.white : controller.accentColor(),
           child: controller.is_loading
-              ? const Center(child: CircularProgressIndicator())
+              ? const Center(
+                  child: PokeLoading(size: 100),
+                )
               : SafeArea(
                   child: ShowUpAnimation(
                     child: Column(

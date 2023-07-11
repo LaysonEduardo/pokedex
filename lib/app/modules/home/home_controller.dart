@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pokedex_colaboraapp/src/models/pokemon/pokemon_simple_model.dart';
@@ -57,5 +59,11 @@ abstract class HomeControllerBase with Store {
     } else {
       fetchPokemonsList();
     }
+  }
+
+  Future<void> randomPokemon() async {
+    final random_id = Random().nextInt(1010 - 1);
+    final pokemon = await respository.getPokemon(random_id);
+    Modular.to.pushNamed('./details', arguments: pokemon);
   }
 }

@@ -13,14 +13,14 @@ part 'welcome_controller.g.dart';
 class WelcomeController = WelcomeControllerBase with _$WelcomeController;
 
 abstract class WelcomeControllerBase with Store {
-  PokedexRepository pokedex = Modular.get<PokedexRepository>();
+  PokedexRepository respository = Modular.get<PokedexRepository>();
   LocalStorageService localStorage = Modular.get<LocalStorageService>();
 
   ObservableList<Pokemon> welcome_pokemons = ObservableList<Pokemon>.of([]);
   List<String> messages = [
     'Welcome to the world of Pokémon! Start your journey and uncover the mysteries of these incredible creatures',
     "Get ready to explore a vast universe discovering random Pokémons. Ctach 'em all and become a Pokémon Master!",
-    'Discover the strengths, weaknesses, evolution paths, abilities, and much more.'
+    'Discover a lot infos about your favorite pokemon.'
   ];
 
   @observable
@@ -47,7 +47,7 @@ abstract class WelcomeControllerBase with Store {
 
   Future<void> addPokemon() async {
     final random_id = Random().nextInt(1010 - 1);
-    final pokemon = await pokedex.getPokemon(random_id);
+    final pokemon = await respository.getPokemon(random_id);
     pokemon.mainColor = await AppColors.pokemonBaseColor(
         Image.network(pokemon.artwork_url).image);
 

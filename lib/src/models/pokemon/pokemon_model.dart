@@ -38,16 +38,17 @@ class Pokemon {
     }
 
     return Pokemon(
-        id: json['id'],
-        name: AppStrings.removeGenderString(json['name']),
-        sprite_url: json['sprites']['front_default'],
-        artwork_url: json['sprites']['other']['official-artwork']
-            ['front_default'],
-        //Multiplicacion to convert decimetres to cm
-        height: json['height'] * 10,
-        //Division to convert weight from hectograms to kilograms
-        weight: json['weight'] / 10,
-        types: fetchedTypes,
-        abilities: fetchedAbilities);
+      id: json['id'],
+      name: AppStrings.removeGenderString(json['name']),
+      sprite_url: json['sprites']['front_default'],
+      artwork_url: json['sprites']['other']['official-artwork']
+          ['front_default'],
+      //Multiplicacion to convert decimetres to cm
+      height: json['height'] * 10,
+      //Division to convert weight from hectograms to kilograms
+      weight: json['weight'] / 10,
+      types: fetchedTypes,
+      abilities: fetchedAbilities,
+    );
   }
 }
