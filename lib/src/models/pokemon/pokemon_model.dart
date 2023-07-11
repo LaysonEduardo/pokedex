@@ -9,7 +9,8 @@ class Pokemon {
   String artwork_url;
   List<PokemonType> types;
   int height;
-  int weight;
+  double weight;
+  List<String> abilities;
   late Color mainColor;
 
   Pokemon({
@@ -20,25 +21,33 @@ class Pokemon {
     required this.types,
     required this.height,
     required this.weight,
+    required this.abilities,
   });
 
   factory Pokemon.fromJson(Map<String, dynamic> json) {
     List<PokemonType> fetchedTypes = [];
+    List<String> fetchedAbilities = [];
 
-    for (Map value in json["types"]) {
+    for (Map value in json['types']) {
       fetchedTypes.addAll(PokemonType.values
-          .where((element) => element.name == value["type"]["name"]));
+          .where((element) => element.name == value['type']['name']));
+    }
+
+    for (var value in json['abilities']) {
+      fetchedAbilities.add(value['ability']['name']);
     }
 
     return Pokemon(
-      id: json['id'],
-      name: AppStrings.removeGenderString(json['name']),
-      sprite_url: json['sprites']['front_default'],
-      artwork_url: json['sprites']['other']['official-artwork']
-          ['front_default'],
-      height: json['height'],
-      weight: json['weight'],
-      types: fetchedTypes,
-    );
+        id: json['id'],
+        name: AppStrings.removeGenderString(json['name']),
+        sprite_url: json['sprites']['front_default'],
+        artwork_url: json['sprites']['other']['official-artwork']
+            ['front_default'],
+        //Multiplicacion to convert decimetres to cm
+        height: json['height'] * 10,
+        //Division to convert weight from hectograms to kilograms
+        weight: json['weight'] / 10,
+        types: fetchedTypes,
+        abilities: fetchedAbilities);
   }
 }

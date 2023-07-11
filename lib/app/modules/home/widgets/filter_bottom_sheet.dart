@@ -45,7 +45,7 @@ class FilterBottomSheet extends StatelessWidget {
                   },
                 ),
               ),
-              VSpace(10),
+              const VSpace(10),
             ],
           ),
         ),

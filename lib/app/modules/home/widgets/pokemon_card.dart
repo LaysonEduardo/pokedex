@@ -36,7 +36,9 @@ class _PokemonCardState extends State<PokemonCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Modular.to.pushNamed('./details', arguments: pokemon);
+        if (has_data) {
+          Modular.to.pushNamed('./details', arguments: pokemon);
+        }
       },
       child: ShowUpAnimation(
         child: ClipRRect(
