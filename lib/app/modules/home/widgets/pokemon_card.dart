@@ -143,8 +143,6 @@ class _PokemonCardState extends State<PokemonCard> {
       pokemon.mainColor = await AppColors.pokemonMainColor(
         Image.network(pokemon.artwork_url).image,
       );
-    }).onError((error, stackTrace) {
-      //TODO insert error here
     });
   }
 }

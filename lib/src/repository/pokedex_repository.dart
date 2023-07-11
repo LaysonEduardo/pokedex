@@ -14,7 +14,11 @@ class PokedexRepository {
   Future<Pokemon> getPokemon(int id) async {
     final Response response = await _http.get(Endpoints.pokemonByID(id));
 
-    return Pokemon.fromJson(response.data);
+    if (response.statusCode == 200) {
+      return Pokemon.fromJson(response.data);
+    } else {
+      throw HTTPException();
+    }
   }
 
   Future<Pokemon> getPokemonWithURL(String url) async {

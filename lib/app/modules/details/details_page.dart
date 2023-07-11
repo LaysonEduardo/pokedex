@@ -62,8 +62,8 @@ class DetailsPage extends StatelessWidget {
                       alignment: Alignment.bottomCenter,
                       child: Container(
                         height: MediaQuery.sizeOf(context).height * 0.5,
-                        padding:
-                            EdgeInsets.symmetric(vertical: 60, horizontal: 20),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 60, horizontal: 20),
                         decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.8),
                           borderRadius: const BorderRadius.only(
