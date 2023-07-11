@@ -9,9 +9,6 @@ Based on the task description, these were the decisions made regarding the packa
     * shimmer_animation: for easy create widget loaders.
     * show_up_animation: for easy control of animations in widgets.
     * palette_generator: to get palette from pokemons.
-* **Internationalization:**
-    * intl: to manipulate dates/times.
-    * intl_utils: to generate files related to translations.
 * **Routes:**
     * Flutter_Modular
 * **HTTP:**
