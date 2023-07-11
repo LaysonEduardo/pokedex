@@ -30,7 +30,7 @@ abstract class HomeControllerBase with Store {
   Future<void> fetchPokemonsList() async {
     isLoading = true;
     pokemons_list.clear();
-    final items = await respository.getPokemons(limit: 20, offset: 0);
+    final items = await respository.getPokemons(limit: 60, offset: 0);
     pokemons_list.addAll(items);
     isLoading = false;
   }
