@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:pokedex_colaboraapp/app/commom/widgets/poke_background.dart';
 import 'package:pokedex_colaboraapp/app/commom/widgets/poke_loading.dart';
 import 'package:pokedex_colaboraapp/app/modules/home/home_controller.dart';

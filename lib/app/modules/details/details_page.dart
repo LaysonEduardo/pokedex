@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:pokedex_colaboraapp/app/commom/widgets/poke_background.dart';
+import 'package:pokedex_colaboraapp/app/commom/widgets/poke_loading.dart';
 import 'package:pokedex_colaboraapp/app/commom/widgets/space.dart';
 import 'package:pokedex_colaboraapp/src/models/pokemon/pokemon_model.dart';
 import 'package:pokedex_colaboraapp/src/utils/app_colors.dart';
@@ -195,6 +196,14 @@ class DetailsPage extends StatelessWidget {
                       child: Image.network(
                         pokemon.artwork_url,
                         height: 300,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress?.cumulativeBytesLoaded ==
+                              loadingProgress?.expectedTotalBytes) {
+                            return child;
+                          } else {
+                            return const PokeLoading(size: 100);
+                          }
+                        },
                       ),
                     ),
                   ],
