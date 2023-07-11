@@ -29,7 +29,9 @@ dependencies:
 #UI  
   flutter_svg: ^2.0.7
   palette_generator: ^0.3.3+2
+  shimmer_animation: ^2.1.0+1
   show_up_animation: ^2.0.0
+  
   
   
   
@@ -45,6 +47,7 @@ flutter:
   assets:
     - assets/background_objects/pokemons/
     - assets/logo/
+    - assets/icons/
 
   fonts:
     - family: Roboto

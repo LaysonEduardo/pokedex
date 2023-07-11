@@ -4,6 +4,7 @@ import 'package:pokedex_colaboraapp/src/models/app/app_exceptions.dart';
 import 'package:pokedex_colaboraapp/src/models/pokemon/pokemon_simple_model.dart';
 import 'package:pokedex_colaboraapp/src/repository/endpoints.dart';
 import 'package:pokedex_colaboraapp/src/services/http/dio_service.dart';
+import 'package:pokedex_colaboraapp/src/utils/poke_types.dart';
 
 import '../models/pokemon/pokemon_model.dart';
 
@@ -25,8 +26,25 @@ class PokedexRepository {
     }
   }
 
-  Future<List<PokemonSimple>> getPokemons(
-      {int limit = 0, int offset = 0}) async {
+  Future<List<PokemonSimple>> getPokemonWithType(PokemonType type) async {
+    List<PokemonSimple> list = [];
+    final Response list_response = await _http.get(
+      Endpoints.pokemonsByType(type),
+    );
+    if (list_response.statusCode == 200) {
+      for (var pokemon_value in list_response.data["pokemon"]) {
+        list.add(PokemonSimple.fromJson(pokemon_value["pokemon"]));
+      }
+      return list;
+    } else {
+      throw HTTPException();
+    }
+  }
+
+  Future<List<PokemonSimple>> getPokemons({
+    int limit = 0,
+    int offset = 0,
+  }) async {
     List<PokemonSimple> list = [];
     final Response list_response = await _http.get(
       Endpoints.pokemonsList(limit: limit, offset: offset),

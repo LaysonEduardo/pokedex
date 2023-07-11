@@ -1,15 +1,11 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:pokedex_colaboraapp/app/commom/widgets/poke_background.dart';
 import 'package:pokedex_colaboraapp/app/modules/home/home_controller.dart';
+import 'package:pokedex_colaboraapp/app/modules/home/widgets/filter_bottom_sheet.dart';
 import 'package:pokedex_colaboraapp/app/modules/home/widgets/pokemon_card.dart';
 import 'package:pokedex_colaboraapp/src/utils/debouncer.dart';
-import 'package:show_up_animation/show_up_animation.dart';
-
-import '../../commom/widgets/poke_search_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -27,8 +23,12 @@ class _HomePageState extends State<HomePage> {
     controller.init();
     scrollController = ScrollController();
     scrollController.addListener(() {
-      if (scrollController.offset >=
-          scrollController.position.maxScrollExtent) {}
+      if (scrollController.offset ==
+          scrollController.position.maxScrollExtent) {
+        Debouncer.run(() {
+          controller.updatePokemons();
+        });
+      }
     });
     super.initState();
   }
@@ -45,63 +45,105 @@ class _HomePageState extends State<HomePage> {
       return Scaffold(
         extendBodyBehindAppBar: true,
         body: PokeBackground(
-          accent: Colors.red,
+          accent: Colors.grey,
           child: RefreshIndicator(
-            edgeOffset: 105,
+            edgeOffset: 55,
             onRefresh: () async {
-              await Timer(Duration(milliseconds: 500), () {});
+              return controller.fetchPokemonsList();
             },
-            child: CustomScrollView(
+            child: Scrollbar(
               controller: scrollController,
-              physics: const BouncingScrollPhysics(),
-              slivers: [
-                SliverAppBar(
-                  backgroundColor: Colors.white.withOpacity(0.8),
-                  title: Image.asset(
-                    'assets/logo/pokedex.png',
-                    height: 30,
-                  ),
-                  centerTitle: true,
-                  bottom: PokeSearchBar(
-                    onChanged: (string) {
-                      Debouncer.run(() {
-                        print(string);
-                      });
-                    },
-                  ),
-                  floating: true,
-                  snap: true,
-                  elevation: 0,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20.0),
-                      bottomRight: Radius.circular(20.0),
+              radius: const Radius.circular(5),
+              trackVisibility: true,
+              thickness: 5,
+              child: CustomScrollView(
+                controller: scrollController,
+                physics: const BouncingScrollPhysics(),
+                slivers: [
+                  SliverAppBar(
+                    backgroundColor: Colors.white,
+                    title: Image.asset(
+                      'assets/logo/pokedex.png',
+                      height: 30,
+                    ),
+                    centerTitle: true,
+                    actions: [
+                      InkWell(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            backgroundColor: Colors.white.withOpacity(0.8),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20.0),
+                                topRight: Radius.circular(20.0),
+                              ),
+                            ),
+                            builder: (context) {
+                              return FilterBottomSheet(
+                                currentType: controller.current_filter_type,
+                                onSelect: (type) {
+                                  controller.current_filter_type = type;
+                                  controller.filterPokemons();
+                                  Navigator.pop(context);
+                                },
+                              );
+                            },
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Icon(
+                            Icons.tune,
+                            color: Colors.grey[800],
+                          ),
+                        ),
+                      ),
+                    ],
+                    floating: true,
+                    snap: true,
+                    elevation: 0,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20.0),
+                        bottomRight: Radius.circular(20.0),
+                      ),
                     ),
                   ),
-                ),
-                SliverToBoxAdapter(
-                  child: controller.isLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          primary: true,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 20,
+                  SliverToBoxAdapter(
+                    child: controller.isLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : GridView.builder(
+                            shrinkWrap: true,
+                            primary: true,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 20,
+                            ),
+                            // itemExtent: 130,
+                            physics: const BouncingScrollPhysics(),
+
+                            gridDelegate:
+                                const SliverGridDelegateWithMaxCrossAxisExtent(
+                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 10,
+                              maxCrossAxisExtent: 250,
+                              mainAxisExtent: 140,
+                              childAspectRatio: 1 / 2,
+                            ),
+                            itemCount: controller.pokemons_list.length,
+
+                            itemBuilder: (BuildContext ctx, index) {
+                              return PokemonCard(
+                                pokemon_data: controller.pokemons_list[index],
+                              );
+                            },
                           ),
-                          itemExtent: 130,
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: controller.pokemons_list.length,
-                          itemBuilder: (BuildContext ctx, index) {
-                            return PokemonCard(
-                              pokemon_data: controller.pokemons_list[index],
-                            );
-                          },
-                        ),
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -109,23 +151,6 @@ class _HomePageState extends State<HomePage> {
         resizeToAvoidBottomInset: true,
         floatingActionButton: FloatingActionButton(onPressed: () {}),
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-        bottomNavigationBar: Visibility(
-          visible: controller.isLoading,
-          child: ShowUpAnimation(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(60),
-                ),
-                child: const CircularProgressIndicator(strokeWidth: 3),
-              ),
-            ),
-          ),
-        ),
       );
     });
   }

@@ -23,6 +23,10 @@ class AppColors {
     }
     throw Exception();
   }
+
+  static typeColor() async {
+    // return Color(Colors.red);
+  }
 }
 
 extension ColorWithHSL on Color {
