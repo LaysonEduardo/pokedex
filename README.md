@@ -1,4 +1,4 @@
-# pokemondex_colaboraapp
+# pokemondex
 ## How build/run this project? 
 * *make sure you have flutter on its latest version (3.10.5)*
 * *if you want to test in mobile, just select your mobile device*
