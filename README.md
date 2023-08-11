@@ -46,5 +46,5 @@ Based on the task description, these were the decisions made regarding the packa
 * There should be a button to navigate back to the home screen.
 
 ## API
-* The API that should be used as a base is the PokeAPI provided by https://pokeapi.com.
+* The API that should be used as a base is the PokeAPI provided by https://pokeapi.co.
 * The API should be used to fetch information about Pokemon.
