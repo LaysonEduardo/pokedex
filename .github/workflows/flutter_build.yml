@@ -1,4 +1,4 @@
-name: Flutter action
+name: Flutter
 
 on: 
   push:
@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
       - run: flutter pub get
      # - run: flutter test
-      - run: flutter build apk
+      - name: Build appbundle
       - run: flutter build appbundle
           
 
