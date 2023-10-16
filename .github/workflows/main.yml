@@ -1,10 +1,11 @@
-name: Deploy Play Store (DEV)
+name: Build android files
 
 on:
   push:
     branches:
-      - "development"
-  workflow_dispatch:
+      - "main"
+  ## uncomment this line to can run the action without need push
+  #workflow_dispatch:
 
 jobs:
   build:
@@ -12,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     # runs-on: macos-latest
     steps:
+
+
       # Setup Java environment in order to build the Android app.
       - name: Checkout
         uses: actions/checkout@v3
@@ -26,7 +29,7 @@ jobs:
         uses: subosito/flutter-action@v2.11.0
         with:
           channel: "stable" # 'dev', 'alpha', default to: 'stable'
-          flutter-version: "2.16.10" # you can also specify exact version of flutter
+          flutter-version: "3.10.0" # you can also specify exact version of flutter
 
       - name: Cache pub dependencies
         uses: actions/cache@v2
@@ -34,15 +37,24 @@ jobs:
           path: ${{ env.FLUTTER_HOME }}/.pub-cache
           key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: ${{ runner.os }}-pub-
-
+        
       - name: Download pub dependencies
         run: flutter pub get
 
       - name: Build Android APK
         run: flutter build apk
+      
+      - name: Upload APK
+        uses: actions/upload-artifact@v3.1.3
+        with:
+          name: bundle release
+          #path: build/app/outputs/bundle/devRelease/app-dev-release.aab
 
-      #- name: Upload a Build Artifact
-     #   uses: actions/upload-artifact@v2.2.3
-      #  with:
-    #      name: bundle release
-      #    path: build/app/outputs/bundle/devRelease/app-dev-release.aab
+      - name: Build Android AppBundle
+        run: flutter build appbundle
+
+      - name: Upload a AAB
+        uses: actions/upload-artifact@v3.1.3
+        with:
+          name: bundle release
+          #path: build/app/outputs/bundle/devRelease/app-dev-release.aab
