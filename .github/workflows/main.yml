@@ -1,24 +1,47 @@
-name: Flutter action
+name: Deploy Play Store (DEV)
+
 on:
   push:
     branches:
-      - development
+      - "development"
+
 jobs:
-  Flutter_Fetch:
+  build:
+    # This job will run on ubuntu virtual machine
+    runs-on: ubuntu-latest
+    # runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-java@v2
-    with:
-      distribution: 'zulu'
-      java-version: '11'
-    - uses: subosito/flutter-action@v2.11.0
-    with:
-      flutter-version: '2.16.0'
-- run: flutter pub get
-- run: flutter test
-- run: flutter build apk
-- run: flutter build appbundle
-      
-    
-      
-  
+      # Setup Java environment in order to build the Android app.
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+
+      # Setup the flutter environment.
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2.11.0
+        with:
+          channel: "stable" # 'dev', 'alpha', default to: 'stable'
+          flutter-version: "2.16.10" # you can also specify exact version of flutter
+
+      - name: Cache pub dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.FLUTTER_HOME }}/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: ${{ runner.os }}-pub-
+
+      - name: Download pub dependencies
+        run: flutter pub get
+
+      - name: Build Android APK
+        run: flutter build apk
+
+      #- name: Upload a Build Artifact
+     #   uses: actions/upload-artifact@v2.2.3
+      #  with:
+    #      name: bundle release
+      #    path: build/app/outputs/bundle/devRelease/app-dev-release.aab
